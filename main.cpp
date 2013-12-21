@@ -59,10 +59,10 @@ avr_cpp_lib::pwm_channel pwm_data[15] = {
 		{&DDRD, &PORTD, PD4, 0},
 		
 		// mosfeti
-		{&DDRD, &PORTD, PD0, 0},
-		{&DDRD, &PORTD, PD1, 0},
-		{&DDRD, &PORTD, PD2, 0},
-		{&DDRD, &PORTD, PD3, 0},
+		{&DDRD, &PORTD, PD0, 0xff},
+		{&DDRD, &PORTD, PD1, 0xff},
+		{&DDRD, &PORTD, PD2, 0xff},
+		{&DDRD, &PORTD, PD3, 0xff},
 		PWM_CHANNEL_END
 	};
 
