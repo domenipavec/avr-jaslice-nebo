@@ -121,7 +121,9 @@ static inline void anime(uint16_t dt) {
 
 int main() {
 	// init
-	
+	// set mosfets to off default
+    SETBITS(PORTD, 0b01111);
+    
 	// timer 0 for pwm
 	OCR0A = PWM_FREQ;
 	TIMSK0 = BIT(OCIE0A);
