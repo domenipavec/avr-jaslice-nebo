@@ -23,14 +23,14 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
  #define F_CPU 8000000UL  // 8 MHz
 //#include <util/delay.h>
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
-//#include <avr/eeprom.h> 
+//#include <avr/eeprom.h>
 
 #include <stdint.h>
 
@@ -47,17 +47,17 @@
 
 avr_cpp_lib::pwm_channel pwm_data[15] = {
 		// tuki so ledice od neba
-		{&DDRB, &PORTB, PB1, 0}, 
+		{&DDRB, &PORTB, PB1, 0},
 		{&DDRB, &PORTB, PB0, 0},
-		{&DDRD, &PORTD, PD7, 0}, 
-		{&DDRD, &PORTD, PD6, 0}, 
+		{&DDRD, &PORTD, PD7, 0},
+		{&DDRD, &PORTD, PD6, 0},
 		{&DDRD, &PORTD, PD5, 0},
-		{&DDRB, &PORTB, PB7, 0}, 
+		{&DDRB, &PORTB, PB7, 0},
 		{&DDRB, &PORTB, PB6, 0},
 		{&DDRA, &PORTA, PA3, 0},
 		{&DDRA, &PORTA, PA2, 0},
 		{&DDRD, &PORTD, PD4, 0},
-		
+
 		// mosfeti
 		{&DDRD, &PORTD, PD0, 0xff},
 		{&DDRD, &PORTD, PD1, 0xff},
@@ -122,22 +122,23 @@ static inline void anime(uint16_t dt) {
 int main() {
 	// init
 	// set mosfets to off default
+    SETBITS(DDRD, 0b01111);
     SETBITS(PORTD, 0b01111);
-    
+
 	// timer 0 for pwm
 	OCR0A = PWM_FREQ;
 	TIMSK0 = BIT(OCIE0A);
 	TCCR0A = 0b01011;
-	
+
 	// timer 1 za merjenje casa
 	OCR1AL = 125; //(to da interrupt na priblizno 4 ms)
 	TIMSK1 = BIT(OCIE1A);
 	TCCR1B = 0b01011;
-	
+
 	// i2c
 	TWCR = 0b01000101;
 	TWAR = ADDRESS<<1;
-	
+
 	// enable interrupts
 	sei();
 
